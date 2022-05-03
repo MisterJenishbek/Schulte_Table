@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Таблица Шульте</title>
+    <link rel="shortcut icon" href="logo.png" type="image/x-icon">
+    <style>
+        table{
+            border-collapse: collapse;
+        }
+        td{
+            width: 74.3px;
+            height: 74.3px;
+            border: 1px solid black;
+            text-align: center;
+            cursor: pointer;
+            user-select: none;
+            font-size: 45px;
+        }
+        .pole{
+            width: fit-content;
+            /* 300px */
+            height: fit-content;
+            /* border: 1px solid black; */
+            margin: auto;
+        }
+        .but{
+            width: 150px;
+            height: 30px;
+            font-size: 20px;
+        }
+        .play{
+            text-align: center;
+        }
+        .title{
+            width: 308px;
+            height: fit-content;
+            /* border: 1px solid black; */
+            font-size: 22px;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+        }
+        .buttons{
+            width: 314px;
+            height: fit-content;
+            /* border: 1px solid black; */
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+        }
+        .link{
+            width: 100px;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+    <div class="pole">
+        <p class="title">
+            <span>Таблица Шульте</span>
+            <span id="timer">40</span>
+        </p>
+        <table>
+            <tr>
+                <td id="1" onclick="hod(1)"></td>
+                <td id="5" onclick="hod(5)"></td>
+                <td id="9" onclick="hod(9)"></td>
+                <td id="13" onclick="hod(13)"></td>
+            </tr>
+            <tr>
+                <td id="2" onclick="hod(2)"></td>
+                <td id="6" onclick="hod(6)"></td>
+                <td id="10" onclick="hod(10)"></td>
+                <td id="14" onclick="hod(14)"></td>
+            </tr>
+            <tr>
+                <td id="3" onclick="hod(3)"></td>
+                <td id="7" onclick="hod(7)"></td>
+                <td id="11" onclick="hod(11)"></td>
+                <td id="15" onclick="hod(15)"></td>
+            </tr>
+            <tr>
+                <td id="4" onclick="hod(4)"></td>
+                <td id="8" onclick="hod(8)"></td>
+                <td id="12" onclick="hod(12)"></td>
+                <td id="16" onclick="hod(16)"></td>
+            </tr>
+        </table>
+        <p class="play">
+            <button class="but" onclick="play()">Играть</button>
+        </p>
+        <p class="buttons">
+            <button class="link" onclick="window.location.href='3x3.html';">3x3</button>
+            <button class="link" onclick="window.location.href='5x5.html';">5x5</button>
+            <button class="link" onclick="window.location.href='6x6.html';">6x6</button>
+        </p>
+    </div>
+    <script>
+        var numbers=[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16];
+        var numhod = 1, click =0; 
+        function play(){
+            numhod = 1;
+            for(let i=1;i<17;i++){
+                document.getElementById(i).style.background='white';
+            }
+            var time = 40;
+            var shuffledNumbers = numbers.sort(function(){
+                return Math.random() - 0.5;
+            });
+            for(let i=1; i<numbers.length+1; i++){
+                document.getElementById(i).innerHTML = shuffledNumbers[i-1];
+            }
+            click++;
+            var timer = setInterval(function(){
+                if(click<2){
+                    time--;
+                    document.getElementById('timer').innerHTML = time;
+                    if(numhod!=17){
+                        if(time==0){
+                            document.getElementById('timer').innerHTML = "Вы проиграли!";
+                            clearInterval(timer);
+                            click--;
+                            numhod=11;
+                        }
+                    } else {
+                        clearInterval(timer);
+                        document.getElementById('timer').innerHTML = "Вы выйграли!"; 
+                        click--;
+                    }
+                } else {
+                    clearInterval(timer);
+                    click--;
+                }
+            },1000)
+            
+        }
+        function hod(num){
+            if(document.getElementById(num).innerHTML==numhod){
+                numhod++;
+                document.getElementById(num).style.background='Salmon';
+            }
+        }
+    </script>
+</body>
+</html>
